@@ -1,19 +1,14 @@
 import pygame
 import sys
+import entities
 
-width = 512
-height = 448
+width = 1024
+height = 896
 
 white = (255, 255, 255)
 black = (0, 0, 0)
 green = (0, 255, 0) 
 blue = (0, 0, 130) 
-
-
-playerposx = 0
-playerposy = 0
-playerpos = (playerposx, playerposy)
-playervel = 16
 
 pygame.init()
 pygame.font.init()
@@ -25,6 +20,9 @@ pygame.display.set_caption('Test')
 font = pygame.font.SysFont("timesnewroman", 16)
 text = font.render('@', True, white)
 pygame.display.flip()
+
+player = entities.Entity("Player", 0, 0)
+
 
 running = True
 
@@ -38,36 +36,36 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_KP4]:
-        playerposx -= playervel
+        player.x -= player.speed
         print("LEFT")
     if keys[pygame.K_KP6]:
-        playerposx += playervel
+        player.x += player.speed
         print("RIGHT")
     if keys[pygame.K_KP8]:
-        playerposy -= playervel
+        player.y -= player.speed
         print("UP")
     if keys[pygame.K_KP2]:
-        playerposy += playervel
+        player.y += player.speed
         print("DOWN")
     if keys[pygame.K_KP7]:
-        playerposy -= playervel
-        playerposx -= playervel
+        player.y -= player.speed
+        player.x -= player.speed
         print("UP_LEFT")
     if keys[pygame.K_KP9]:
-        playerposy -= playervel
-        playerposx += playervel
+        player.y -= player.speed
+        player.x += player.speed
         print("UP_LEFT")
     if keys[pygame.K_KP1]:
-        playerposy += playervel
-        playerposx -= playervel
+        player.y += player.speed
+        player.x -= player.speed
         print("UP_LEFT")
     if keys[pygame.K_KP3]:
-        playerposy += playervel
-        playerposx += playervel
+        player.y += player.speed
+        player.x += player.speed
         print("UP_LEFT")
     
 
-    playerpos = (playerposx, playerposy)
+    playerpos = (player.x, player.y)
 
     screen.fill((0,0,0))
     screen.blit(text, playerpos)
