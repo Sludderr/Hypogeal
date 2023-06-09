@@ -5,9 +5,10 @@ width = 512
 height = 448
 
 white = (255, 255, 255)
+black = (0, 0, 0)
 green = (0, 255, 0) 
 blue = (0, 0, 130) 
-black = (0, 0, 0)
+
 
 playerposx = 0
 playerposy = 0
