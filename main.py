@@ -1,8 +1,10 @@
 import pygame
+import colours
 import entities
 import renderer
 import gamemap
 import input_handler
+
 
 
 width = 64
@@ -11,9 +13,11 @@ height = 64
 screenwidth = width * 16
 screenheight = height * 16
 
-white = (255, 255, 255)
-black = (0, 0, 0)
-green = (0, 255, 0)
+colourdict = colours.getcolours() 
+
+white = colourdict["white"]
+black = colourdict["black"]
+green = colourdict["green"]
 
 pygame.init()
 pygame.font.init()
