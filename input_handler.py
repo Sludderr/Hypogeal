@@ -1,8 +1,6 @@
 import pygame
 import gamemap
 
-
-
 def detectcollision(x,y,Map):
     if Map[y][x].walkable == False:
         return True
