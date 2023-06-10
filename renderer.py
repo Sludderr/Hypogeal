@@ -1,12 +1,14 @@
 import pygame
 import entities
 import gamemap
+import colours
 
-black = (0,0,0)
+colourdict = colours.getcolours() 
 
+black = colourdict["black"]
 
 def update(screen, font, width, height):
-    screen.fill((0,0,0))
+    screen.fill(black)
     
     Map = gamemap.getmap()
     for y in range(height):
@@ -27,3 +29,4 @@ def update(screen, font, width, height):
         screen.blit(text, CurrentEntityPos)
         
     pygame.display.update()
+
