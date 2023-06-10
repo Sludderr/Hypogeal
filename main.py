@@ -6,9 +6,8 @@ import gamemap
 import input_handler
 
 
-
-width = 64
-height = 64
+width = 60
+height = 60
 
 screenwidth = width * 16
 screenheight = height * 16
@@ -24,7 +23,7 @@ pygame.font.init()
 screen = pygame.display.set_mode((screenwidth, screenheight))
 clock = pygame.time.Clock()
 
-pygame.display.set_caption('Test')
+pygame.display.set_caption('Hypogeal')
 font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
