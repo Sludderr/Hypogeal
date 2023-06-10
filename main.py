@@ -1,10 +1,12 @@
 import pygame
 import entities
 import renderer
+import gamemap
 import input_handler
 
+
 width = 64
-height = 56
+height = 64
 
 screenwidth = width * 16
 screenheight = height * 16
@@ -22,8 +24,10 @@ pygame.display.set_caption('Test')
 font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
-player = entities.create_entity("Player", 0, 0, "@", white)
+player = entities.create_entity("Player", 10, 10, "@", white)
 dummy = entities.create_entity("Dummy", 4, 4, "#", green)
+
+Map = gamemap.setup(width,height)
 
 running = True
 
@@ -36,6 +40,6 @@ while running:
     
     input_handler.handle(player)
     
-    renderer.update(screen, font)
+    renderer.update(screen, font, width, height)
     
 pygame.quit()
