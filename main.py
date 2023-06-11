@@ -4,7 +4,7 @@ import entities
 import renderer
 import gamemap
 import input_handler
-
+import random
 
 width = 60
 height = 60
@@ -27,10 +27,14 @@ pygame.display.set_caption('Hypogeal')
 font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
-player = entities.create_entity("Player", 30, 30, "@", white)
+startx = random.randint(10, width-10)
+starty = random.randint(10, height-10)
+
+player = entities.create_entity("Player", startx, starty, "@", white)
 dummy = entities.create_entity("Dummy", 4, 4, "#", green)
 
-Map = gamemap.setup(width,height)
+
+Map = gamemap.setup(width, height, startx, starty)
 
 running = True
 
