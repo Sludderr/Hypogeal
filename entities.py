@@ -14,3 +14,9 @@ def create_entity(name: str, x: int, y: int, char: str, colour):
     newEntity = Entity(name, x, y, char, colour)
     entitylist.insert(0,newEntity)
     return newEntity
+
+def getentities():
+    return entitylist
+
+def getplayer():
+    return entitylist[len(entitylist)-1]
