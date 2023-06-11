@@ -27,7 +27,7 @@ pygame.display.set_caption('Hypogeal')
 font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
-player = entities.create_entity("Player", 10, 10, "@", white)
+player = entities.create_entity("Player", 30, 30, "@", white)
 dummy = entities.create_entity("Dummy", 4, 4, "#", green)
 
 Map = gamemap.setup(width,height)
