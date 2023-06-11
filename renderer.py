@@ -1,19 +1,36 @@
+import pygame
+import entities
+import gamemap
+import colours
 import raycaster
-import procgeneration
 
-def update_visibility(Map, playerx, playery, width, height):
-    for y in range(21):
-        for x in range(21):
-            ytemp = playery-10+y
-            xtemp = playerx-10+x
-            if ytemp > 0 and ytemp < height and xtemp > 0 and xtemp < width:
-                if raycaster.distance(playerx, playery, xtemp, ytemp) < 10:
-                    if procgeneration.checkadjacent(Map, width, height, xtemp, ytemp, "wall", "border") == 8:
-                        Map[ytemp][xtemp].rendered = False
-                    elif raycaster.raydetect(Map, playerx, playery, xtemp, ytemp, 0, True, 0, 0) == True:
-                        Map[ytemp][xtemp].rendered = True
-                    else:
-                        Map[ytemp][xtemp].rendered = False
-                else:
-                    Map[ytemp][xtemp].rendered = False
-    return Map
+
+colourdict = colours.getcolours() 
+
+black = colourdict["black"]
+
+def update(screen, font, width, height):
+    screen.fill(black)
+    player = entities.getplayer()
+    entitylist = entities.entitylist
+    
+    Map = gamemap.getmap()
+    for y in range(height):
+        for x in range(width):
+            CurrentTile = Map[y][x]
+            if CurrentTile.name == "border":
+                CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
+                text = font.render(CurrentTile.char, True, CurrentTile.colour)
+                screen.blit(text, CurrentTilePos)
+            elif CurrentTile.rendered == True:
+                CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
+                text = font.render(CurrentTile.char, True, CurrentTile.colour)
+                screen.blit(text, CurrentTilePos)
+    
+    for i in range(len(entitylist)):
+        CurrentEntity = entitylist[i]
+        CurrentEntityPos = (CurrentEntity.x * 16, CurrentEntity.y * 16)
+        text = font.render(CurrentEntity.char, True, CurrentEntity.colour, black)
+        screen.blit(text, CurrentEntityPos)
+        
+    pygame.display.update()
