@@ -8,12 +8,12 @@ def update_visibility(Map, playerx, playery, width, height):
             xtemp = playerx-10+x
             if ytemp > 0 and ytemp < height and xtemp > 0 and xtemp < width:
                 if raycaster.distance(playerx, playery, xtemp, ytemp) < 10:
-                    if procgeneration.checkadjacent(Map, width, height, xtemp, ytemp, "wall", "border") == 8:
+                    if procgeneration.checkadjacent(Map, width, height, xtemp, ytemp, "wall", "border") == 8 or raycaster.pathdetect(Map, playerx, playery, xtemp, ytemp) == False:
                         Map[ytemp][xtemp].rendered = False
-                    elif raycaster.raydetect(Map, playerx, playery, xtemp, ytemp, 0, True, 0, 0) == True:
-                        Map[ytemp][xtemp].rendered = True
+                    #elif raycaster.raydetect(Map, playerx, playery, xtemp, ytemp, 0, True, 0, 0) == True:
+                        #Map[ytemp][xtemp].rendered = True
                     else:
-                        Map[ytemp][xtemp].rendered = False
+                        Map[ytemp][xtemp].rendered = True
                 else:
                     Map[ytemp][xtemp].rendered = False
     return Map
