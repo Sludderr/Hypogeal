@@ -22,10 +22,16 @@ def update(screen, font, width, height):
                 CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
                 text = font.render(CurrentTile.char, True, CurrentTile.colour)
                 screen.blit(text, CurrentTilePos)
-            elif CurrentTile.rendered == True:
-                CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
-                text = font.render(CurrentTile.char, True, CurrentTile.colour)
-                screen.blit(text, CurrentTilePos)
+            else:
+                if player.viewrestrict == 0:
+                    if CurrentTile.visible == True:
+                        CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
+                        text = font.render(CurrentTile.char, True, CurrentTile.colour)
+                        screen.blit(text, CurrentTilePos)
+                elif CurrentTile.rendered == True:
+                    CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
+                    text = font.render(CurrentTile.char, True, CurrentTile.colour)
+                    screen.blit(text, CurrentTilePos)
     
     for i in range(len(entitylist)):
         CurrentEntity = entitylist[i]
