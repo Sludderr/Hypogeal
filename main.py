@@ -30,8 +30,8 @@ pygame.display.flip()
 startx = random.randint(10, width-10)
 starty = random.randint(10, height-10)
 
-player = entities.create_entity("Player", startx, starty, "@", white)
-dummy = entities.create_entity("Dummy", 4, 4, "#", green)
+player = entities.create_entity("Player", startx, starty, "@", white, 0)
+dummy = entities.create_entity("Dummy", 4, 4, "#", green, 0)
 
 
 Map = gamemap.setup(width, height, startx, starty)
