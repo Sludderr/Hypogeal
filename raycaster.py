@@ -91,8 +91,6 @@ def pathdetect(Map, startx, starty, destx, desty):
             startx -= 1
             
     if startx != destx or starty != desty:
-        print("startx = ", startx, " starty = ", starty, " destx = ", destx, " desty = ", desty)
         return False
     else:
-        
         return True
