@@ -41,7 +41,7 @@ def drunkardwalk(Map, width, height, startx, starty):
     drunky = starty
     limit = 0
     border = random.randint(2, 8)
-    while limit <= 1000:
+    while limit <= random.randint(700,1300):
         if Map[drunky][drunkx].name == "wall":
             Map[drunky][drunkx] = gamemap.Tile_Floor("floor",drunkx,drunky,camel)
             limit += 1
