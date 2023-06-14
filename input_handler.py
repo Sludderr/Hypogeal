@@ -82,3 +82,8 @@ def handle(player):
             # COLLISION
             print("The way is blocked")
         
+    elif keys[pygame.K_SPACE]:
+        if player.viewrestrict == 0:
+            player.viewrestrict = 10
+        else:
+            player.viewrestrict = 0
