@@ -1,6 +1,5 @@
 import colours
 import procgeneration
-import random
 import state
 
 colourdict = colours.getcolours() 
@@ -33,13 +32,15 @@ def setup(widther, heighter, startx, starty):
     global Map
     global width
     global height
-    
+
     width = widther
     height = heighter
     
     Map = [[Tile_Floor("floor",x,y,camel) for x in range(width)] for y in range(height)]
     Map = procgeneration.drunkardwalk(Map, width, height, startx, starty)
-    
+    Map = procgeneration.populate(Map, width, height, startx, starty)
+
+    # Set the border to '#'s
     for x in range(width):
         Map[0][x] = Tile_Wall("border",x,0,darkslate)
         Map[height-1][x] = Tile_Wall("border",x,height-1,darkslate)
