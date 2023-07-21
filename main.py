@@ -3,8 +3,8 @@ import colours
 import entities
 import renderer
 import gamemap
-import input_handler
 import random
+import turn_handler
 
 width = 60
 height = 60
@@ -18,6 +18,7 @@ white = colourdict["white"]
 black = colourdict["black"]
 green = colourdict["green"]
 
+# Initialise pygame and screen
 pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((screenwidth, screenheight))
@@ -27,26 +28,31 @@ pygame.display.set_caption('Hypogeal')
 font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
+
+# Start player and procgen location
 startx = random.randint(10, width-10)
 starty = random.randint(10, height-10)
 
-player = entities.create_entity("Player", startx, starty, "@", white, 0)
-dummy = entities.create_entity("Dummy", 4, 4, "#", green, 0)
+# Initialise player
+player = entities.create_player("Player", startx, starty, "@", white, 10, 10)
 
-
+# Initialise Map
 Map = gamemap.setup(width, height, startx, starty)
 
 running = True
 
+# Outer Gameloop. Always loops until game is entirely quit.
 while running:
-    pygame.time.delay(100)
-    
+    # Call the turnhandler. This loops through every active entity and updates them.
+    turn_handler.updateturns(entities.getentities())
+
+    # Neatly closes pygame and process without crashing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    input_handler.handle(player)
-    
+
+    # Handle rendering and output
     renderer.update(screen, font, width, height)
-    
+
+# When gameloop ends quit pygame
 pygame.quit()
