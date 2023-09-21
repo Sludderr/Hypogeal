@@ -1,9 +1,7 @@
-def setup(widther, heighter, startx, starty):
+def setup(width, height):
     global Map
-    global width
-    global height
 
-    # Initialise 2D array
+    # Initialise 2D array of floor objects
     Map = NewArray(width,height,floor("floor",x,y))
 
     # Procedural Generation Algorithm
