@@ -34,10 +34,12 @@ startx = random.randint(10, width-10)
 starty = random.randint(10, height-10)
 
 # Initialise player
-player = entities.create_player("Player", startx, starty, "@", white, 10, 10)
+player = entities.create_player("Player", startx, starty, 20, "@", white, 10, 10)
 
 # Initialise Map
 Map = gamemap.setup(width, height, startx, starty)
+
+Map[starty][startx].occupants.append(player)
 
 running = True
 
