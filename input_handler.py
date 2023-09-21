@@ -1,4 +1,6 @@
 import pygame
+import gamemap
+import state
 
 def handle(player):
     # Get key inputs
@@ -36,7 +38,19 @@ def handle(player):
         if player.move(+1,+1) == True:
             return True
 
+    elif keys[pygame.K_KP5]:
+        return True
 
+    elif keys[pygame.K_UP]:
+        player.viewrestrict += 1
+        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
+        return True
+    
+    elif keys[pygame.K_DOWN]:
+        player.viewrestrict -= 1
+        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
+        return True
+        
     # Swap view restrict mode for dev purposes
     elif keys[pygame.K_SPACE]:
         if player.viewrestrict == 0:
