@@ -8,7 +8,8 @@ colours = {
     "camel": (193, 154, 107),
     "slate": (112, 128, 144),
     "darkslate": (47, 79, 79),
-    "red": (255,0,0)
+    "red": (255,0,0),
+    "maroon": (100,14,39)
 }
 def getcolours():
     return colours
