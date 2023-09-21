@@ -8,6 +8,7 @@ colourdict = colours.getcolours()
 white = colourdict["white"]
 mint = colourdict["mint"]
 camel = colourdict["camel"]
+maroon = colourdict["maroon"]
 red = colourdict["red"]
 
 def checkadjacent(Map, width, height, x, y, nametag, altnametag):
@@ -48,7 +49,7 @@ def drunkardwalk(Map, width, height, startx, starty):
     # Iterate through each tile of the Map
     for y in range(height):
         for x in range(width):
-            Map[y][x] = gamemap.Tile_Wall("wall",x,y,mint)
+            Map[y][x] = gamemap.Tile_Wall("wall",x,y,(random.randint(80,120), random.randint(0,30), random.randint(25,55)))
             # Set every tile to a wall
     drunkx = startx
     drunky = starty
@@ -96,13 +97,13 @@ def drunkardwalk(Map, width, height, startx, starty):
 
 def populate(Map, width, height, startx,starty):
     total = 0
-    limit = random.randint(0, 20)
+    limit = random.randint(10, 20)
     while total < limit:
         curx = random.randint(3,width-3)
         cury = random.randint(3,height-3)
         if Map[cury][cury].walkable == True:
             total += 1
-            entities.create_entity("Dummy", curx, cury, "$", red, 0, 30)
+            Map[cury][curx].occupants.append(entities.create_entity("Dummy", curx, cury, 3, "$", red, 0, 30))
     
     
     return Map
