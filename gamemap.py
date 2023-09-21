@@ -1,6 +1,7 @@
 import colours
 import procgeneration
 import state
+import entities
 
 colourdict = colours.getcolours() 
 
@@ -14,6 +15,7 @@ class Tile():
         self.walkable = walkable
         self.visible = visible
         self.rendered = rendered
+        self.occupants = []
 
 class Tile_Floor(Tile):
     def __init__(self, name, x, y, colour):
@@ -48,7 +50,7 @@ def setup(widther, heighter, startx, starty):
         Map[y][0] = Tile_Wall("border",0,y,darkslate)
         Map[y][width-1] = Tile_Wall("border",width-1,y,darkslate)
     
-    Map = state.update_visibility(Map, startx, starty, width, height)
+    Map = state.update_visibility(Map, startx, starty, width, height,entities.getplayer().viewrestrict)
     
     return Map
 
