@@ -6,13 +6,14 @@ import gamemap
 import random
 import turn_handler
 
-width = 60
-height = 60
+width = 50
+height = 50
 
-screenwidth = width * 16
-screenheight = height * 16
+#originally 16x20
+screenwidth = width * 30
+screenheight = height * 20
 
-colourdict = colours.getcolours() 
+colourdict = colours.getcolours()
 
 white = colourdict["white"]
 black = colourdict["black"]
@@ -34,12 +35,13 @@ startx = random.randint(10, width-10)
 starty = random.randint(10, height-10)
 
 # Initialise player
-player = entities.create_player("Player", startx, starty, 20, "@", white, 10, 10)
+player = entities.create_player("Player", startx, starty, 20, "@", white, 10)
 
 # Initialise Map
 Map = gamemap.setup(width, height, startx, starty)
 
 Map[starty][startx].occupants.append(player)
+
 
 running = True
 
