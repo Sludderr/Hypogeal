@@ -2,12 +2,13 @@ import pygame
 import entities
 import gamemap
 import colours
-import raycaster
 
 
 colourdict = colours.getcolours() 
 
 black = colourdict["black"]
+red = colourdict["red"]
+lightblue = colourdict["lightblue"]
 
 def update(screen, font, width, height):
     screen.fill(black)
@@ -50,6 +51,31 @@ def update(screen, font, width, height):
             text = font.render(CurrentEntity.char, True, CurrentEntity.colour, black)
             # same as before, except the background is specified as black (will completely cover the tile below)
             screen.blit(text, CurrentEntityPos)
-
+            
+    
+    ui(screen,width,height)
+    
     # Update the pygame display- output it. 
     pygame.display.update()
+
+def flash(entity, colour):
+    screen = pygame.display.get_surface()
+    font = pygame.font.SysFont("timesnewroman", 16)
+    entitypos = (entity.x * 16, entity.y * 16)
+    text = font.render(entity.char, True, colour, black)
+    screen.blit(text, entitypos)
+    pygame.display.update()
+    pygame.time.delay(100)
+    
+def ui(screen,width,height):
+    font = pygame.font.SysFont("timesnewroman", 50)
+    
+    hearttext = font.render("♥", True, red)
+    screen.blit(hearttext, (32,850))
+    healthtext = font.render(str(entities.getplayer().health)+"/"+str(entities.getplayer().maxhealth), True, red)
+    screen.blit(healthtext, (84,850))
+    
+    startext = font.render("☼", True, lightblue)
+    screen.blit(startext, (23,900))
+    manatext = font.render(str(entities.getplayer().mana)+"/"+str(entities.getplayer().maxmana), True, lightblue)
+    screen.blit(manatext, (84,900))
