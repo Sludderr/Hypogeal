@@ -2,9 +2,9 @@ import math
 
 
 # Use pythagoras to get distance
-def distance(playerx, playery, tilex, tiley):
-    xdist = playerx - tilex
-    ydist = playery - tiley
+def distance(ax, ay, bx, by):
+    xdist = ax - bx
+    ydist = ay - by
     answer = math.sqrt((xdist ** 2) + (ydist ** 2))
     return answer
 
