@@ -1,6 +1,7 @@
 import pygame
 import gamemap
 import state
+import storage
 
 def handle(player):
     # Get key inputs
@@ -49,6 +50,7 @@ def handle(player):
     
     elif keys[pygame.K_KP_MULTIPLY]:
         if player.pickup() == 1:
+            storage.storeplayer(player)
             return 1
         return 0
 
