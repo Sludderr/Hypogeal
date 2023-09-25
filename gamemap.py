@@ -1,72 +1,75 @@
-import colours
-import procgeneration
+import pygame
+import gamemap
 import state
-import entities
+import storage
 
-colourdict = colours.getcolours() 
+def handle(player):
+    # Get key inputs
+    keys = pygame.key.get_pressed()
+    # North
+    if keys[pygame.K_KP8]:
+        if player.move(0,-1) == 1:
+            return 1
+    # South
+    elif keys[pygame.K_KP2]:
+        if player.move(0,+1) == 1:
+            return 1
+    # West
+    elif keys[pygame.K_KP4]:
+        if player.move(-1,0) == 1:
+            return 1
+    # East
+    elif keys[pygame.K_KP6]:
+        if player.move(+1,0) == 1:
+            return 1
+    # North-West
+    elif keys[pygame.K_KP7]:
+        if player.move(-1,-1) == 1:
+            return 1
+    # North-East
+    elif keys[pygame.K_KP9]:
+        if player.move(+1,-1) == 1:
+            return 1
+    # South-West
+    elif keys[pygame.K_KP1]:
+        if player.move(-1,+1) == 1:
+            return 1
+    # South-East
+    elif keys[pygame.K_KP3]:
+        if player.move(+1,+1) == 1:
+            return 1
 
-class Tile():
-    def __init__(self, name: str, x, y, char: str, colour, walkable: bool, visible, rendered):
-        self.name = name
-        self.x = x
-        self.y = y
-        self.char = char
-        self.colour = colour
-        self.walkable = walkable
-        self.visible = visible
-        self.rendered = rendered
-        self.occupants = []
+    elif keys[pygame.K_KP5]:
+        return 1
+    
+    elif keys[pygame.K_KP_ENTER]:
+        if player.stair() == 2:
+            return 2
+        else:
+            return 0
+    
+    elif keys[pygame.K_KP_MULTIPLY]:
+        if player.pickup() == 1:
+            storage.storeplayer(player)
+            return 1
+        return 0
 
-class Tile_Floor(Tile):
-    def __init__(self, name, x, y, colour):
-        Tile.__init__(self, name, x, y, "~", colour, True, True, False)
+    elif keys[pygame.K_UP]:
+        player.viewrestrict += 1
+        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
+        return 1
+    
+    elif keys[pygame.K_DOWN]:
+        player.viewrestrict -= 1
+        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
+        return 1
         
-class Tile_Wall(Tile):
-    def __init__(self, name, x, y, colour):
-        Tile.__init__(self, name, x, y, "#", colour, False, True, False)
-
-white = colourdict["white"]
-mint = colourdict["mint"]
-camel = colourdict["camel"]
-darkslate = colourdict["darkslate"]
-
-def setup(widther, heighter, startx, starty):
-    global Map
-    global width
-    global height
-
-    width = widther
-    height = heighter
-    
-    Map = [[Tile_Floor("floor",x,y,camel) for x in range(width)] for y in range(height)]
-    Map = procgeneration.drunkardwalk(Map, width, height, startx, starty)
-    Map = procgeneration.populate(Map, width, height, startx, starty)
-
-    # Set the border to '#'s
-    for x in range(width):
-        Map[0][x] = Tile_Wall("border",x,0,darkslate)
-        Map[height-1][x] = Tile_Wall("border",x,height-1,darkslate)
-    for y in range(width):
-        Map[y][0] = Tile_Wall("border",0,y,darkslate)
-        Map[y][width-1] = Tile_Wall("border",width-1,y,darkslate)
-    
-    Map = state.update_visibility(Map, startx, starty, width, height,entities.getplayer().viewrestrict)
-    
-    return Map
-
-def getmap():
-    global Map
-    return Map
-
-def setmap(Maptemp):
-    global Map
-    Map = Maptemp
-    
-def getwidth():
-    global width
-    return width
-
-def getheight():
-    global height
-    return height
-
+    # Swap view restrict mode for dev purposes
+    elif keys[pygame.K_SPACE]:
+        if player.viewrestrict == 0:
+            player.viewrestrict = 10
+        else:
+            player.viewrestrict = 0
+        return 1
+            
+    return 0
