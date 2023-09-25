@@ -67,9 +67,11 @@ class Entity():
             target.ap = 0
             target.char = "%"
             
+            
         else:
             print(target.name, "'s health is now ", target.health)
 
+        renderer.update(pygame.display.get_surface(),pygame.font.SysFont("timesnewroman", 16),gamemap.getwidth(),gamemap.getheight())
         return 1
     
     def heal(self,amount):
