@@ -10,7 +10,10 @@ width = 50
 height = 50
 
 #originally 16x20
-screenwidth = width * 30
+# homemode
+#screenwidth = width * 30
+# schoolmode
+screenwidth = width * 20
 screenheight = height * 20
 
 colourdict = colours.getcolours()
@@ -36,6 +39,7 @@ starty = random.randint(10, height-10)
 
 # Initialise player
 player = entities.create_player("Player", startx, starty, 20, "@", white, 10)
+
 
 # Initialise Map
 Map = gamemap.setup(width, height, startx, starty)
