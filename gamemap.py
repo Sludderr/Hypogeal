@@ -61,6 +61,14 @@ def getmap():
 def setmap(Maptemp):
     global Map
     Map = Maptemp
+
+def setwidth(wid):
+    global width
+    width = wid
+
+def setheight(hei):
+    global height
+    height = hei
     
 def getwidth():
     global width
