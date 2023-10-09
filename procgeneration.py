@@ -105,7 +105,7 @@ def populate(Map, width, height, startx,starty):
     while Map[cury][curx].walkable != True or distance(curx,cury,startx,starty) < 10:
         curx = random.randint(3,width-3)
         cury = random.randint(3,height-3)
-    stairs = gamemap.Tile("stairs",curx,cury,"Z",mint,True,True,False)
+    stairs = gamemap.Tile("stairs",curx,cury,"H",mint,True,True,False)
     Map[cury][curx] = stairs
     
     while Map[cury][curx].walkable != True or distance(curx,cury,startx,starty) < 10 or Map[cury][curx].name == "stairs":
