@@ -51,7 +51,7 @@ class Entity():
     def attack(self, target, damage, col):
         target.health -= damage
         renderer.flash(target,col)
-        if target.health <= -2:
+        if target.health <= -2 and target.name != "Player's corpse":
             print(target.name, " is destroyed!")
             entitylist.remove(target)
             Map = gamemap.getmap()
@@ -59,7 +59,7 @@ class Entity():
             player = getplayer()
             gamemap.setmap(state.update_visibility(Map, player.x, player.y, gamemap.getwidth(), gamemap.getheight(),getplayer().viewrestrict))
             return 1
-        elif target.health <= 0:
+        elif target.health <= 0 and target.name != "Player's corpse":
             print(target.name, " is dead!")
             target.name = target.name + "'s corpse"
             target.speed = 0
@@ -93,7 +93,6 @@ class Enemy(Entity):
         elif dist < 10 and self.health > 0:
             x,y = direction(self.x, self.y, player.x, player.y)
             self.move(x*self.speed,y*self.speed)
-        #print("Entity: I took an action!")
         return 1
     
 class Player(Entity):
@@ -118,7 +117,8 @@ class Player(Entity):
                 action = True
             elif returncode == 2:
                 return 2
-        print("Player: I took an action!")
+            elif returncode == 50:
+                return 50
         return 1
         
     def move(self,xoffset,yoffset):
@@ -176,6 +176,10 @@ def create_entity(name: str, x: int, y: int, health: int, char: str, colour):
     entitylist.insert(0,newEntity)
     return newEntity
 
+def create_item(name: str, x: int, y: int, health: int, char: str, colour):
+    newEntity = Entity(name, x, y, health, char, colour)
+    return newEntity
+
 def create_enemy(name: str, x: int, y: int, health: int, char: str, colour, initiative):
     global entitylist
     newEnemy = Enemy(name, x, y, health, char, colour, initiative)
@@ -185,7 +189,7 @@ def create_enemy(name: str, x: int, y: int, health: int, char: str, colour, init
 def create_player(name: str, x: int, y: int, health: int, char: str, colour, initiative):
     global entitylist
     newPlayer = Player(name, x, y, health, char, colour, initiative)
-    entitylist.insert(0,newPlayer)
+    entitylist.append(newPlayer)
     return newPlayer
 
 def getentities():
@@ -194,6 +198,10 @@ def getentities():
 def getplayer():
     return entitylist[len(entitylist)-1]
 
+def deleteentities():
+    global entitylist
+    entitylist = []
+    return entitylist
 
 def detectcollision(x,y,Map):
     if Map[y][x].walkable == True:
