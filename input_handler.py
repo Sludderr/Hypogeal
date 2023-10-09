@@ -50,8 +50,15 @@ def handle(player):
     
     elif keys[pygame.K_KP_MULTIPLY]:
         if player.pickup() == 1:
-            storage.storeplayer(player)
             return 1
+        return 0
+
+    elif keys[pygame.K_x]:
+        storage.clearstorage()
+        return 0
+
+    elif keys[pygame.K_s]:
+        storage.storeall()
         return 0
 
     elif keys[pygame.K_UP]:
@@ -71,5 +78,12 @@ def handle(player):
         else:
             player.viewrestrict = 0
         return 1
+    
+    elif keys[pygame.K_ESCAPE]:
+        if player.health > 0:
+            storage.storeall()
+        else:
+            storage.clearstorage()
+        return 50
             
     return 0
