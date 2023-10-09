@@ -66,6 +66,7 @@ def flash(entity, colour):
     screen.blit(text, entitypos)
     pygame.display.update()
     pygame.time.delay(100)
+    return
     
 def ui(screen,width,height):
     font = pygame.font.SysFont("timesnewroman", 50)
