@@ -26,4 +26,3 @@ def update_visibility(Map, playerx, playery, width, height,view):
 
 #elif raycaster.raydetect(Map, playerx, playery, xtemp, ytemp, 0, True, 0, 0) == True:
                         #Map[ytemp][xtemp].rendered = True:
-
