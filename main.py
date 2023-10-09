@@ -5,6 +5,8 @@ import renderer
 import gamemap
 import random
 import turn_handler
+import storage
+import menu
 
 width = 50
 height = 50
@@ -29,38 +31,48 @@ screen = pygame.display.set_mode((screenwidth, screenheight))
 clock = pygame.time.Clock()
 
 pygame.display.set_caption('Hypogeal')
-font = pygame.font.SysFont("timesnewroman", 16)
+font = pygame.font.SysFont("times new roman", 16)
 pygame.display.flip()
 
+choice = menu.mainmenu(screen)
 
 # Start player and procgen location
-startx = random.randint(10, width-10)
-starty = random.randint(10, height-10)
-
-# Initialise player
-player = entities.create_player("Player", startx, starty, 20, "@", white, 10)
-
-
-# Initialise Map
-Map = gamemap.setup(width, height, startx, starty)
-
-Map[starty][startx].occupants.append(player)
-
 
 running = True
+
+if choice == "new":
+    storage.clearstorage()
+    startx = random.randint(10, width-10)
+    starty = random.randint(10, height-10)
+    entities.deleteentities()
+    player = entities.create_player("Player", startx, starty, 20, "@", white, 10)
+    Map = gamemap.setup(width, height, startx, starty)
+    Map[starty][startx].occupants.append(player)
+
+elif choice == "load":
+    player = storage.loadall()
+    if player.health > 0:
+        startx = player.x
+        starty = player.y
+        Map = gamemap.getmap()
+    Map[starty][startx].occupants.append(player)
+        
+elif choice == "quit":
+    running = False
+
 
 # Outer Gameloop. Always loops until game is entirely quit.
 while running:
     # Call the turnhandler. This loops through every active entity and updates them.
-    turn_handler.updateturns(entities.getentities())
+    returncode = turn_handler.updateturns(entities.getentities())
 
     # Neatly closes pygame and process without crashing
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    if returncode == 50:
+        running = False
 
     # Handle rendering and output
-    renderer.update(screen, font, width, height)
+    else:
+        renderer.update(screen, font, width, height)
 
 # When gameloop ends quit pygame
 pygame.quit()
