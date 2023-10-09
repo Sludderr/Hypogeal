@@ -8,4 +8,6 @@ def updateturns(entities):
         entities[i].ap = 0
         returncode = entities[i].take_action()
         if returncode == 2:
-          return
+          return 2
+        if returncode == 50:
+          return 50
