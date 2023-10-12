@@ -1,0 +1,1 @@
+{"name": "Player", "x": 42, "y": 9, "health": 16, "maxhealth": 20, "mana": 20, "maxmana": 20, "ap": 0, "invsize": 2, "char": "@", "initiative": 10, "sentient": true, "viewrestrict": 10, "colour": [255, 255, 255]}
