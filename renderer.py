@@ -2,6 +2,7 @@ import pygame
 import entities
 import gamemap
 import colours
+import menu
 
 
 colourdict = colours.getcolours() 
@@ -9,11 +10,12 @@ colourdict = colours.getcolours()
 black = colourdict["black"]
 red = colourdict["red"]
 lightblue = colourdict["lightblue"]
+maroon = colourdict["maroon"]
 
 def update(screen, font, width, height):
     screen.fill(black)
     player = entities.getplayer()
-    entitylist = entities.entitylist
+    entitylist = entities.getentities()
     
     Map = gamemap.getmap()
     # Iterate through every tile of the map
@@ -25,22 +27,13 @@ def update(screen, font, width, height):
                 CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
                 text = font.render(CurrentTile.char, True, CurrentTile.colour)
                 screen.blit(text, CurrentTilePos)
-            else:
-                # If using dev mode
-                if player.viewrestrict == 0:
-                    if CurrentTile.visible == True:
-                        # scale tile sizes up to "pixel sizes". One tile is 16x16 pixels
-                        CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
-                        # create the text to be rendered using the entity info
-                        text = font.render(CurrentTile.char, True, CurrentTile.colour)
-                        screen.blit(text, CurrentTilePos)
-                # If the current tile should be rendered
-                elif CurrentTile.rendered == True:
-                    # Scale tile sizes up to "pixel sizes". One tile is 16x16 pixels
-                    CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
-                    # Create the text to be rendered using the entity info
-                    text = font.render(CurrentTile.char, True, CurrentTile.colour)
-                    screen.blit(text, CurrentTilePos)
+            # If the current tile should be rendered
+            elif CurrentTile.rendered == True:
+                # Scale tile sizes up to "pixel sizes". One tile is 16x16 pixels
+                CurrentTilePos = (CurrentTile.x * 16, CurrentTile.y * 16)
+                # Create the text to be rendered using the entity info
+                text = font.render(CurrentTile.char, True, CurrentTile.colour)
+                screen.blit(text, CurrentTilePos)
 
     # Loop through all active entities and render them ontop of the tiles. 
     for i in range(len(entitylist)):
@@ -54,6 +47,7 @@ def update(screen, font, width, height):
             
     
     ui(screen,width,height)
+    menu.inventorymenu(screen)
     
     # Update the pygame display- output it. 
     pygame.display.update()
@@ -80,3 +74,9 @@ def ui(screen,width,height):
     screen.blit(startext, (23,900))
     manatext = font.render(str(entities.getplayer().mana)+"/"+str(entities.getplayer().maxmana), True, lightblue)
     screen.blit(manatext, (84,900))
+    
+    invtext = pygame.font.SysFont("times new roman", 30).render("Inventory", True, maroon)
+    screen.blit(invtext, (800,10))
+
+    spelltext = pygame.font.SysFont("times new roman", 30).render("Spells", True, lightblue)
+    screen.blit(spelltext, (800,500))
