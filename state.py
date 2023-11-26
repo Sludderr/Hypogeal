@@ -1,5 +1,12 @@
 import raycaster
 import procgeneration
+import math
+
+def distance(ax, ay, bx, by):
+    xdist = ax - bx
+    ydist = ay - by
+    answer = math.sqrt((xdist ** 2) + (ydist ** 2))
+    return answer
 
 def update_visibility(Map, playerx, playery, width, height,view):
     # iterate through map tiles within the range of the player
@@ -10,7 +17,7 @@ def update_visibility(Map, playerx, playery, width, height,view):
             xtemp = playerx-view+x
             if ytemp > 0 and ytemp < height and xtemp > 0 and xtemp < width:
                 # if inside the map
-                if raycaster.distance(playerx, playery, xtemp, ytemp) < view:
+                if distance(playerx, playery, xtemp, ytemp) < view:
                     # if within viewing distance
                     if procgeneration.checkadjacent(Map, width, height, xtemp, ytemp, "wall", "border") == 8 or raycaster.pathdetect(Map, playerx, playery, xtemp, ytemp) == False:
                         # if obscured or inside a wall
@@ -22,7 +29,3 @@ def update_visibility(Map, playerx, playery, width, height,view):
                 else:
                     Map[ytemp][xtemp].rendered = False
     return Map
-
-
-#elif raycaster.raydetect(Map, playerx, playery, xtemp, ytemp, 0, True, 0, 0) == True:
-                        #Map[ytemp][xtemp].rendered = True:
