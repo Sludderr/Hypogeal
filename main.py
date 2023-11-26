@@ -1,37 +1,30 @@
 import pygame
 import colours
 import entities
-import renderer
 import gamemap
 import random
 import turn_handler
 import storage
 import menu
+import spells
 
 width = 50
 height = 50
 
-#originally 16x20
-# homemode
-#screenwidth = width * 30
-# schoolmode
-screenwidth = width * 20
+screenwidth = width * 30
 screenheight = height * 20
 
 colourdict = colours.getcolours()
-
 white = colourdict["white"]
-black = colourdict["black"]
-green = colourdict["green"]
 
 # Initialise pygame and screen
 pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((screenwidth, screenheight))
-clock = pygame.time.Clock()
+pygame.display.set_icon(pygame.image.load("icon.png"))
 
 pygame.display.set_caption('Hypogeal')
-font = pygame.font.SysFont("times new roman", 16)
+font = pygame.font.SysFont("timesnewroman", 16)
 pygame.display.flip()
 
 choice = menu.mainmenu(screen)
@@ -41,6 +34,7 @@ choice = menu.mainmenu(screen)
 running = True
 
 if choice == "new":
+    # clear the storage and create new player, create new map
     storage.clearstorage()
     startx = random.randint(10, width-10)
     starty = random.randint(10, height-10)
@@ -48,6 +42,7 @@ if choice == "new":
     player = entities.create_player("Player", startx, starty, 20, "@", white, 10)
     Map = gamemap.setup(width, height, startx, starty)
     Map[starty][startx].occupants.append(player)
+    spells.givefirewall(0)
 
 elif choice == "load":
     player = storage.loadall()
@@ -56,10 +51,9 @@ elif choice == "load":
         starty = player.y
         Map = gamemap.getmap()
     Map[starty][startx].occupants.append(player)
-        
+
 elif choice == "quit":
     running = False
-
 
 # Outer Gameloop. Always loops until game is entirely quit.
 while running:
@@ -70,9 +64,7 @@ while running:
     if returncode == 50:
         running = False
 
-    # Handle rendering and output
-    else:
-        renderer.update(screen, font, width, height)
+    pygame.time.delay(10)
 
 # When gameloop ends quit pygame
 pygame.quit()
