@@ -1,11 +1,11 @@
 import pygame
-import gamemap
-import state
 import storage
+import menu
 
 def handle(player):
     # Get key inputs
     keys = pygame.key.get_pressed()
+    pos = pygame.mouse.get_pos()
     # North
     if keys[pygame.K_KP8]:
         if player.move(0,-1) == 1:
@@ -38,10 +38,8 @@ def handle(player):
     elif keys[pygame.K_KP3]:
         if player.move(+1,+1) == 1:
             return 1
-
     elif keys[pygame.K_KP5]:
         return 1
-    
     elif keys[pygame.K_KP_ENTER]:
         if player.stair() == 2:
             return 2
@@ -52,32 +50,6 @@ def handle(player):
         if player.pickup() == 1:
             return 1
         return 0
-
-    elif keys[pygame.K_x]:
-        storage.clearstorage()
-        return 0
-
-    elif keys[pygame.K_s]:
-        storage.storeall()
-        return 0
-
-    elif keys[pygame.K_UP]:
-        player.viewrestrict += 1
-        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
-        return 1
-    
-    elif keys[pygame.K_DOWN]:
-        player.viewrestrict -= 1
-        gamemap.setmap(state.update_visibility(gamemap.getmap(), player.x, player.y, gamemap.width, gamemap.height,player.viewrestrict+1))
-        return 1
-        
-    # Swap view restrict mode for dev purposes
-    elif keys[pygame.K_SPACE]:
-        if player.viewrestrict == 0:
-            player.viewrestrict = 10
-        else:
-            player.viewrestrict = 0
-        return 1
     
     elif keys[pygame.K_ESCAPE]:
         if player.health > 0:
@@ -85,5 +57,13 @@ def handle(player):
         else:
             storage.clearstorage()
         return 50
+    
+    elif keys[pygame.K_KP_PLUS]:
+        if menu.interface() == 1:
+            return 1
+
+    elif keys[pygame.K_KP_MINUS]:
+        if menu.spellinterface() == 1:
+            return 1
             
     return 0
