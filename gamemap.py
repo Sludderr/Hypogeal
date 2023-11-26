@@ -16,6 +16,7 @@ class Tile():
         self.visible = visible
         self.rendered = rendered
         self.occupants = []
+        self.health = 10
 
 class Tile_Floor(Tile):
     def __init__(self, name, x, y, colour):
