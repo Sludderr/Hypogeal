@@ -25,7 +25,9 @@ colours = {
     "darkaquamarine": (102,205,170),
     "teal": (0,128,128),
     "crimson": (220,20,60),
-    "olive": (128,128,0)
+    "olive": (128,128,0),
+    "olivedrab": (107,142,35),
+    "lightgrey": (192,192,192)
 }
 def getcolours():
     return colours
